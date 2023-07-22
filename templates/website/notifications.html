@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Home</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='website/index.css') }}"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Tomorrow&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap"
+      rel="stylesheet"
+    />
+    <style> 
+      h1 {
+        text-align: center;
+      }
+
+      /* .holder {
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+      }  */
+
+      /* .row {
+        background: white;
+        border-radius: 5px;
+        padding: 5px;
+        font-size: 20px;
+        height: 30px;
+        display:flex;
+        align-items:center;
+      } */
+
+      .row a{
+        text-decoration: none;
+
+      }
+    </style>
+  </head>
+  <body class="home">
+    <header>
+      <div class="hea">
+        <div class="logo">
+          <h1>
+            <span>P</span>RICE <span style="padding-left: 10px">T</span>AG
+          </h1>
+        </div>
+
+        <div class="menu">
+          <a href="#" style="display: none">About Us</a>
+          <a href="#" style="display: none">Sites</a>
+          <a href="{{ url_for('user.login') }}">Log Out</a>
+          <a href="{{ url_for('user.profile')}}">Profile</a>
+          <a href="{{ url_for('views.dashboard', token=token) }}">Dashboard</a>
+          <a href="{{ url_for('views.home')}}" class="hom">Home</a>
+          <a href="{{ url_for('notifications.notification')}}">Notifications</a>
+        </div>
+      </div>
+    </header>
+    <!-- welcome,{{email}} -->
+      <h1>Notifications</h1>
+        <div class="holder">
+        {% for notification in notifications %}
+        {% if not notification.is_read %}
+        <div class="row">
+          <table>
+            <td>
+              <img src="{{ notification.product.img }}" style="height:50px;width:50px;">
+            </td>
+            <td>
+              <a style="margin-left: 5px ; width:80px;" href="{{ url_for('views.dashboard') }}">
+                {{ notification.message }}
+              </a>
+            </td>
+            <td> 
+              <a style="height:50px;width:50px;" href="{{ url_for('notifications.mark_read', notification_id=notification['id'] ) }}">Mark as read</a>
+            </td>
+          </table>
+        </div>
+        {% endif %}
+        {% endfor %}
+        </div>
+  </body>
+</html>
+
